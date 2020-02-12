@@ -84,9 +84,9 @@ export default {
     computeDistance() {
       //   console.log("computed getter");
       if (this.store.properties.distance < 1000) {
-        return this.store.properties.distance + "m";
+        return this.store.properties.distance + " m";
       } else {
-        return this.store.properties.distance / 1000 + "km";
+        return (this.store.properties.distance / 1000).toFixed(1) + " km";
       }
     }
   },
