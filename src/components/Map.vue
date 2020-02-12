@@ -416,6 +416,7 @@ export default {
     line-height: 30px;
     background-color: white;
     border-top: 2px solid #f7f7f7;
+    overflow: hidden;
   }
   .closeBtn {
     position: absolute;
