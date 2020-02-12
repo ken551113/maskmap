@@ -82,7 +82,9 @@
         ></popUp>
       </div>
       <div class="sidebarInfo" @click="refreshData" v-if="filiterStore">
+        <i class="fa fa-info" aria-hidden="true"></i>
         最後更新時間: {{ filiterStore[0].properties.updated }}
+        <i class="fa fa-refresh" aria-hidden="true"></i>
       </div>
     </div>
     <div class="position" @click="getPosition">
@@ -139,13 +141,13 @@ export default {
           if (level > 200) {
             markerColor = "#11787a";
           } else if (level < 100) {
-            markerColor = "#e67e22";
-          } else {
             markerColor = "#70777c";
+          } else {
+            markerColor = "#e67e22";
           }
 
           return circleMarker(latlng, {
-            radius: 10,
+            radius: 12,
             fillColor: markerColor,
             color: markerColor,
             weight: 1,
@@ -417,6 +419,10 @@ export default {
     background-color: white;
     border-top: 2px solid #f7f7f7;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 15px;
   }
   .closeBtn {
     position: absolute;
