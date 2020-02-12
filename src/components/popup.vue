@@ -92,8 +92,10 @@ export default {
   },
   methods: {
     getMaskStatus(num) {
-      if (num >= 100) {
+      if (num >= 200) {
         return "enough";
+      } else if (num >= 100 && num < 200) {
+        return "mid";
       } else if (num > 0 && num < 100) {
         return "low";
       } else if (num == 0) {
@@ -145,14 +147,18 @@ export default {
   text-align: center;
   line-height: 50px;
   color: white;
+  font-weight: bold;
   &.enough {
-    background-color: #11787a;
+    background-color: #58968a;
+  }
+  &.mid {
+    background-color: #fe9166;
   }
   &.low {
-    background-color: #e67e22;
+    background-color: #fb6a6b;
   }
   &.none {
-    background-color: rgba($color: #70777c, $alpha: 0.3);
+    background-color: #d6d8d9;
   }
 }
 
@@ -160,7 +166,7 @@ export default {
   text-align: left;
   font-weight: bold;
   margin-bottom: 12px;
-  color: #34495e;
+  color: #344644;
   font-size: 20px;
   span {
     font-size: 11px;
@@ -173,7 +179,7 @@ export default {
   color: #566778;
   margin-bottom: 10px;
   span {
-    color: #34495e;
+    color: #344644;
     margin-right: 10px;
   }
 }
@@ -187,7 +193,7 @@ export default {
   display: block;
 
   &:hover {
-    background-color: rgba($color: #34495e, $alpha: 0.5);
+    background-color: rgba($color: #344644, $alpha: 0.5);
   }
 }
 

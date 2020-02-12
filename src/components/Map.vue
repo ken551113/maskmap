@@ -60,7 +60,7 @@
       <l-control-zoom position="topright"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker :lat-lng="marker"> </l-marker>
-      <v-marker-cluster>
+      <v-marker-cluster :options="{ disableClusteringAtZoom: 16 }">
         <l-geo-json
           v-for="geoJson in pharmacies"
           :key="geoJson.id"
@@ -178,12 +178,14 @@ export default {
           let markerColor;
           let level =
             feature.properties.mask_adult + feature.properties.mask_child;
-          if (level > 200) {
-            markerColor = "#11787a";
-          } else if (level < 100) {
-            markerColor = "#70777c";
+          if (level >= 200) {
+            markerColor = "#58968a";
+          } else if (level >= 100 && level < 200) {
+            markerColor = "#fe9166";
+          } else if (level > 0) {
+            markerColor = "#fb6a6b";
           } else {
-            markerColor = "#e67e22";
+            markerColor = "#7e8b99";
           }
           return circleMarker(latlng, {
             radius: 12,
@@ -210,7 +212,8 @@ export default {
                   latLng(
                     feature.geometry.coordinates[1],
                     feature.geometry.coordinates[0]
-                  )
+                  ),
+                  16
                 );
               });
             }
@@ -269,7 +272,7 @@ export default {
         );
         this.marker = this.center;
         this.$nextTick(() => {
-          this.$refs.myMap.mapObject.panTo(this.center);
+          this.$refs.myMap.mapObject.panTo(this.center, 16);
         });
       });
     },
@@ -278,7 +281,8 @@ export default {
       this.show = true;
       this.$nextTick(() => {
         this.$refs.myMap.mapObject.flyTo(
-          latLng(store.geometry.coordinates[1], store.geometry.coordinates[0])
+          latLng(store.geometry.coordinates[1], store.geometry.coordinates[0]),
+          16
         );
       });
       if (this.platform == "mobile") {
@@ -510,13 +514,13 @@ export default {
   }
   .closeBtn {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
     background-color: #e8e3e3;
     top: 50px;
-    right: -30px;
+    right: -45px;
     border-radius: 0px 5px 5px 0px;
-    line-height: 30px;
+    line-height: 45px;
     &:hover {
       cursor: pointer;
     }
