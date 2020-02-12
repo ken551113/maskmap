@@ -7,13 +7,14 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 //import ElementUI from "element-ui";
-import { Input, Option, Select } from "element-ui";
+import { Input, Option, Select, Dialog } from "element-ui";
 
 import "element-ui/lib/theme-chalk/index.css";
 
 Vue.use(Input);
 Vue.use(Option);
 Vue.use(Select);
+Vue.use(Dialog);
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;

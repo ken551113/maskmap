@@ -15,6 +15,40 @@
         </div>
       </div>
     </div>
+    <el-dialog
+      title="關於"
+      :visible.sync="dialogVisible"
+      :width="platform == 'mobile' ? '90%' : '30%'"
+      class="dialog"
+    >
+      <h3>
+        部分藥局採發放號碼牌方式，口罩數量以藥局實際存量為主，線上查詢之數量僅供參考，前往購買前可以先打電話確認。
+      </h3>
+      <h3>*手機使用前請開啟定位服務。</h3>
+      <h3>
+        感謝
+        <a href="https://g0v.hackmd.io/@kiang/mask-info" target="blank"
+          >口罩供需資訊平台</a
+        >
+        與
+        <a href="https://github.com/kiang/pharmacies" target="blank">Kiang</a>
+        提供資料
+      </h3>
+
+      <span slot="footer" class="dialog-footer ">
+        <h3>
+          Created by KenLee
+        </h3>
+        <h3>
+          <a href="https://github.com/ken551113/maskmap" target="blank"
+            ><i class="fa fa-github" aria-hidden="true"></i
+          ></a>
+          <a href="https://kenlee.com.tw/" target="blank"
+            ><i class="fa fa-globe" aria-hidden="true"></i
+          ></a>
+        </h3>
+      </span>
+    </el-dialog>
     <l-map
       style="width: 100%; height: 100%;"
       :zoom="zoom"
@@ -82,9 +116,13 @@
         ></popUp>
       </div>
       <div class="sidebarInfo" v-if="filiterStore">
-        <!-- <i class="fa fa-info btn" aria-hidden="true" @click="openInfo()"></i> -->
+        <div class="btn" @click="dialogVisible = true">
+          <i class="fa fa-info " aria-hidden="true"></i>
+        </div>
         最後更新時間: {{ filiterStore[0].properties.updated }}
-        <!-- <i class="fa fa-refresh btn" aria-hidden="true" @click="refreshData"></i> -->
+        <div class="btn">
+          <!-- <i class="fa fa-refresh " aria-hidden="true" @click="refreshData"></i> -->
+        </div>
       </div>
     </div>
     <div class="position" @click="getPosition">
@@ -123,7 +161,7 @@ export default {
       currentPosition: latLng(25.0343924, 121.565437),
       url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        'Created By <a href="https://kenlee.com.tw">KenLee</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 
       marker: latLng(22.604799, 120.2976256),
       storeInfo: null,
@@ -133,6 +171,8 @@ export default {
       filterDistance: "1500",
       filterMaskType: "all",
       lastUpdateTime: "",
+      dialogVisible: false,
+      // lastMarkerSelected: null,
       geojsonMarkerOptions: {
         pointToLayer: (feature, latlng) => {
           let markerColor;
@@ -145,7 +185,6 @@ export default {
           } else {
             markerColor = "#e67e22";
           }
-
           return circleMarker(latlng, {
             radius: 12,
             fillColor: markerColor,
@@ -160,7 +199,13 @@ export default {
             click: () => {
               this.storeInfo = feature;
               this.show = true;
+              // if (this.lastMarkerSelected != null) {
+              //   this.lastMarkerSelected.setStyle({ radius: 12 });
+              // }
               this.$nextTick(() => {
+                // layer.setStyle({ radius: 30 });
+                // this.lastMarkerSelected = layer;
+
                 this.$refs.myMap.mapObject.flyTo(
                   latLng(
                     feature.geometry.coordinates[1],
@@ -337,7 +382,37 @@ export default {
 <style lang="scss" scoped>
 @import "~leaflet.markercluster/dist/MarkerCluster.css";
 @import "~leaflet.markercluster/dist/MarkerCluster.Default.css";
-
+.dialog {
+  a {
+    &:link {
+      text-decoration: none;
+      color: #606266;
+    }
+    &:visited {
+      //設定已經瀏覽過的連結
+      color: #606266;
+    }
+  }
+}
+.dialog-footer {
+  text-align: center;
+  h3 {
+    color: #606266;
+  }
+  a {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+    &:link {
+      text-decoration: none;
+      color: #606266;
+    }
+    &:visited {
+      //設定已經瀏覽過的連結
+      color: #606266;
+    }
+  }
+}
 .splashScree {
   position: absolute;
   height: 100%;
@@ -419,10 +494,19 @@ export default {
     background-color: white;
     border-top: 2px solid #f7f7f7;
     overflow: hidden;
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
-    // padding: 0px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // padding: 0px 10px;
+    .btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: white;
+      &:hover {
+        background: #f7f7f7;
+      }
+    }
   }
   .closeBtn {
     position: absolute;
