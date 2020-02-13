@@ -23,4 +23,23 @@ body {
 * {
   box-sizing: border-box;
 }
+
+//l-circle的css要在這邊設定
+.pulse {
+  transform-origin: center;
+  animation: pulsate 1.5s ease-out infinite;
+  transform-box: fill-box;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(0.7, 0.7);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
 </style>

@@ -59,7 +59,8 @@
     >
       <l-control-zoom position="topright"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-marker :lat-lng="marker"> </l-marker>
+      <l-circle-marker :lat-lng="marker" :options="userMakerOption" />
+      <!-- <l-marker :lat-lng="marker"> </l-marker> -->
       <v-marker-cluster :options="{ disableClusteringAtZoom: 16 }">
         <l-geo-json
           v-for="geoJson in pharmacies"
@@ -136,7 +137,8 @@ import { latLng, circleMarker } from "leaflet";
 import {
   LMap,
   LTileLayer,
-  LMarker,
+  LCircleMarker,
+  // LMarker,
   LGeoJson,
   LControlZoom
 } from "vue2-leaflet";
@@ -147,7 +149,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker,
+    // LMarker,
+    LCircleMarker,
     LGeoJson,
     LControlZoom,
     popUp,
@@ -173,6 +176,15 @@ export default {
       lastUpdateTime: "",
       dialogVisible: false,
       // lastMarkerSelected: null,
+      userMakerOption: {
+        radius: 10,
+        color: "white",
+        fillColor: "#24a0cb",
+        className: "pulse",
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.8
+      },
       geojsonMarkerOptions: {
         pointToLayer: (feature, latlng) => {
           let markerColor;
@@ -386,6 +398,7 @@ export default {
 <style lang="scss" scoped>
 @import "~leaflet.markercluster/dist/MarkerCluster.css";
 @import "~leaflet.markercluster/dist/MarkerCluster.Default.css";
+
 .dialog {
   a {
     &:link {
