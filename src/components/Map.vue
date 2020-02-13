@@ -273,7 +273,6 @@ export default {
       }
     },
     getPosition() {
-      console.log("click 11112222");
       this.$store.dispatch("fetchPharmacies");
 
       navigator.geolocation.getCurrentPosition(location => {
@@ -284,7 +283,7 @@ export default {
         );
         this.marker = this.center;
         this.$nextTick(() => {
-          this.$refs.myMap.mapObject.panTo(this.center, 16);
+          this.$refs.myMap.mapObject.flyTo(this.center, 16);
         });
       });
     },
