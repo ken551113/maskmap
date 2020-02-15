@@ -12,7 +12,8 @@ export default new Vuex.Store({
     initial: false,
     hideSplashScreen: false,
     timer: null,
-    countdownTime: 60
+    countdownTime: 60,
+    lastUpdateTime: null
   },
   mutations: {
     setPharmacies(state, data) {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     resetTimer(state) {
       clearInterval(state.timer);
+    },
+    setLastUpdateTime(state, data) {
+      state.lastUpdateTime = data;
     }
   },
   actions: {
@@ -57,6 +61,8 @@ export default new Vuex.Store({
           });
 
           console.log(data);
+
+          commit("setLastUpdateTime", data[0].properties.updated);
           commit("setLoad", true);
           commit("setPharmacies", data);
           // commit("setTimer");

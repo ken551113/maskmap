@@ -103,7 +103,7 @@
           </el-select>
         </div>
       </div>
-      <div class="content">
+      <div class="content" v-if="filiterStore">
         <popUp
           v-for="store in filiterStore"
           :key="
@@ -116,11 +116,11 @@
           @clickPop="moveToMarker(store)"
         ></popUp>
       </div>
-      <div class="sidebarInfo" v-if="filiterStore">
+      <div class="sidebarInfo">
         <div class="btn" @click="dialogVisible = true">
           <i class="fa fa-info " aria-hidden="true"></i>
         </div>
-        最後更新時間: {{ filiterStore[0].properties.updated }}
+        最後更新時間: {{ this.$store.state.lastUpdateTime }}
         <div class="btn">
           <!-- <i class="fa fa-refresh " aria-hidden="true" @click="refreshData"></i> -->
         </div>
@@ -175,6 +175,7 @@ export default {
       filterMaskType: "all",
       lastUpdateTime: "",
       dialogVisible: false,
+      hasResult: true,
       // lastMarkerSelected: null,
       userMakerOption: {
         radius: 10,
@@ -343,14 +344,19 @@ export default {
       });
       if (this.filterMaskType == "all") {
         filterDistance.sort((a, b) => {
+          console.log("filter all");
           return a.properties.distance - b.properties.distance;
         });
       } else if (this.filterMaskType == "adult") {
         filterDistance.sort((a, b) => {
+          console.log("filter adult");
+
           return b.properties.mask_adult - a.properties.mask_adult;
         });
       } else {
         filterDistance.sort((a, b) => {
+          console.log("filter child");
+
           return b.properties.mask_child - a.properties.mask_child;
         });
       }
@@ -362,6 +368,8 @@ export default {
       } else {
         filterResult = filterDistance;
       }
+
+      if (filterResult.length == 0) return false;
 
       return filterResult;
     }

@@ -42,4 +42,11 @@ body {
     transform: scale(1, 1);
   }
 }
+
+//修復element ui select 在 ios要點擊兩次才可以選取的bug
+.el-scrollbar {
+  > .el-scrollbar__bar {
+    opacity: 1 !important;
+  }
+}
 </style>
