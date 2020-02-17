@@ -10,6 +10,7 @@ import VueAxios from "vue-axios";
 import { Input, Option, Select, Dialog } from "element-ui";
 
 import "element-ui/lib/theme-chalk/index.css";
+import "./registerServiceWorker";
 
 Vue.use(Input);
 Vue.use(Option);

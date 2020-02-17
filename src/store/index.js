@@ -67,6 +67,7 @@ export default new Vuex.Store({
           commit("setPharmacies", data);
           // commit("setTimer");
           commit("setInitial", true);
+
           setTimeout(() => {
             commit("setHideSplashScreen", true);
           }, 1000);
