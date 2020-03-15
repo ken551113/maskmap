@@ -67,10 +67,10 @@ export default new Vuex.Store({
           commit("setPharmacies", data);
           // commit("setTimer");
           commit("setInitial", true);
-
-          setTimeout(() => {
-            commit("setHideSplashScreen", true);
-          }, 1000);
+          commit("setHideSplashScreen", true);
+          // setTimeout(() => {
+          //   commit("setHideSplashScreen", true);
+          // }, 1000);
         });
       // getArticleList().then(res => {
       //   console.log(res.data.getMasks.payload);

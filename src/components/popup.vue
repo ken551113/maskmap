@@ -21,6 +21,9 @@
       <span>地址</span>{{ store.properties.address }}
     </div>
     <div class="info phone"><span>電話</span>{{ store.properties.phone }}</div>
+    <div class="info note" v-if="store.properties.note !== '-'">
+      <span>備註</span>{{ store.properties.note }}
+    </div>
     <div
       class="action_desktop"
       v-if="platform == 'desktop'"
@@ -191,9 +194,11 @@ export default {
   text-decoration: none;
   color: #566778;
   display: block;
-
-  &:hover {
-    background-color: rgba($color: #344644, $alpha: 0.5);
+  @media (hover: hover) {
+    /* ... */
+    &:hover {
+      background-color: rgba($color: #344644, $alpha: 0.5);
+    }
   }
 }
 

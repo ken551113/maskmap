@@ -1,20 +1,8 @@
 <template>
   <div style="width: 100%; height: 100%;">
-    <div
-      class="splashScree"
-      :class="isInital ? 'hide' : ''"
-      ref="splashScreen"
-      v-show="!hideSplashScreen"
-    >
-      <div class="gooey">
-        <span class="dot"></span>
-        <div class="dots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-    </div>
+    <transition name="fade">
+      <SplashScreen v-show="!hideSplashScreen" />
+    </transition>
     <el-dialog
       title="關於"
       :visible.sync="dialogVisible"
@@ -60,7 +48,6 @@
       <l-control-zoom position="topright"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-circle-marker :lat-lng="marker" :options="userMakerOption" />
-      <!-- <l-marker :lat-lng="marker"> </l-marker> -->
       <v-marker-cluster :options="{ disableClusteringAtZoom: 16 }">
         <l-geo-json
           v-for="geoJson in pharmacies"
@@ -120,7 +107,9 @@
         <div class="btn" @click="dialogVisible = true">
           <i class="fa fa-info " aria-hidden="true"></i>
         </div>
-        最後更新時間: {{ this.$store.state.lastUpdateTime }}
+        <div class="text">
+          最後更新時間: {{ this.$store.state.lastUpdateTime }}
+        </div>
         <div class="btn">
           <!-- <i class="fa fa-refresh " aria-hidden="true" @click="refreshData"></i> -->
         </div>
@@ -144,6 +133,7 @@ import {
 } from "vue2-leaflet";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 import popUp from "./popup";
+import SplashScreen from "./SplashScreen";
 export default {
   name: "VueLeaflet",
   components: {
@@ -154,6 +144,7 @@ export default {
     LGeoJson,
     LControlZoom,
     popUp,
+    SplashScreen,
     "v-marker-cluster": Vue2LeafletMarkerCluster
   },
   data() {
@@ -437,17 +428,7 @@ export default {
     }
   }
 }
-.splashScree {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-  z-index: 10000;
-  transition: 1s;
-  &.hide {
-    opacity: 0;
-  }
-}
+
 .popupx {
   position: absolute;
   bottom: 50px;
@@ -531,6 +512,11 @@ export default {
         background: #f7f7f7;
       }
     }
+    .text {
+      display: inline-block;
+      min-width: 200px;
+      overflow: hidden;
+    }
   }
   .closeBtn {
     position: absolute;
@@ -575,82 +561,11 @@ export default {
   width: 48%;
 }
 
-.gooey {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 142px;
-  height: 40px;
-  margin: -20px 0 0 -71px;
-  background: #fff;
-  filter: contrast(20);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.gooey .dot {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  top: 12px;
-  left: 15px;
-  filter: blur(4px);
-  background: #000;
-  border-radius: 50%;
-  transform: translateX(0);
-  animation: dot 2.8s infinite;
-}
-.gooey .dots {
-  transform: translateX(0);
-  margin-top: 12px;
-  margin-left: 31px;
-  animation: dots 2.8s infinite;
-}
-.gooey .dots span {
-  display: block;
-  float: left;
-  width: 16px;
-  height: 16px;
-  margin-left: 16px;
-  filter: blur(4px);
-  background: #000;
-  border-radius: 50%;
-}
-@-moz-keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@-webkit-keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@-o-keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@-moz-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@-webkit-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@-o-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

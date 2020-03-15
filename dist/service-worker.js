@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.7f1dd9fde54e158495e155a4ae4a08f7.js"
+  "/precache-manifest.be4e87ba6fa7804f548e31dbeb444b63.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "maskmap"});
