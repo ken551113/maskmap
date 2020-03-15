@@ -195,7 +195,6 @@ export default {
   color: #566778;
   display: block;
   @media (hover: hover) {
-    /* ... */
     &:hover {
       background-color: rgba($color: #344644, $alpha: 0.5);
     }

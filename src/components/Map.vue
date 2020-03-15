@@ -115,6 +115,9 @@
         </div>
       </div>
     </div>
+    <div class="refresh" @click="refreshApp">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </div>
     <div class="position" @click="getPosition">
       <i class="fa fa-crosshairs" aria-hidden="true"></i>
     </div>
@@ -278,6 +281,9 @@ export default {
           this.$refs.myMap.mapObject.flyTo(this.center, 16);
         });
       });
+    },
+    refreshApp() {
+      window.location.reload();
     },
     moveToMarker(store) {
       this.storeInfo = store;
@@ -546,8 +552,34 @@ export default {
   z-index: 5000;
   font-size: 25px;
   cursor: pointer;
-  &:hover {
-    background-color: #f7f7f7;
+  @media (hover: hover) {
+    &:hover {
+      background-color: #f7f7f7;
+    }
+  }
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.refresh {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 10px;
+  bottom: 70px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 5000;
+  font-size: 25px;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      background-color: #f7f7f7;
+    }
   }
   i {
     position: absolute;
